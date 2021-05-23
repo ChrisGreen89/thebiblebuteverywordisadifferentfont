@@ -2,7 +2,7 @@
   "name": "thebiblebuteverywordisarandomfont",
   "version": "1.0.0",
   "description": "The Bible, but every word is a random font",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {},
   "author": "",
   "license": "ISC",
