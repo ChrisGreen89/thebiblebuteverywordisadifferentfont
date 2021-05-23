@@ -1,19 +1,22 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld/>
+      <BibleVerse/>
+      <v-footer absolute>
+        The Bible, but Every Word is a Different Font. &copy;2021 <a href="https://chrisgreen.dev" class="ml-1">chrisgreen.dev</a>
+      </v-footer>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import BibleVerse from './components/BibleVerse';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    BibleVerse,
   },
 
   data: () => ({

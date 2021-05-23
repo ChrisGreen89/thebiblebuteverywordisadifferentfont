@@ -13,7 +13,8 @@
                <v-tooltip :key="i" top>
                   <template v-slot:activator="{on}">
 
-                  <div v-on="on" style="display: inline;" :style="`font-family: ${fontFamilies[i]} !important; font-size: 18px !important;`" class="subtitle-1" :key="i">{{word}}&nbsp;</div>
+                  <div @click.stop.prevent="handleNavigateToGoogleFont(fontFamilies[i])" v-on="on" style="display: inline;cursor: pointer;" :style="`font-family: ${fontFamilies[i]} !important; font-size: 20px !important;`" class="subtitle-1" :key="i">
+                    {{word}}&nbsp;</div>
                   </template>
                   <span>{{fontFamilies[i]}}</span>
                </v-tooltip>
@@ -31,7 +32,7 @@
 <script>
 import {getFonts, getVerse} from '@/utils/api'
   export default {
-    name: 'HelloWorld',
+    name: 'BibleVerse',
     data() {
       return {
         colors: [],
@@ -77,6 +78,9 @@ import {getFonts, getVerse} from '@/utils/api'
           this.colors.push(this.randomHex())
         }
       },
+      handleNavigateToGoogleFont(font) {
+        window.open("https://fonts.google.com/specimen/" + font, "_blank")
+      },
       randomHex() {
         return (
           "#" +
@@ -88,8 +92,13 @@ import {getFonts, getVerse} from '@/utils/api'
     }
   }
 </script>
-<style>
+<style lang="scss">
 .slide-fade-enter-active {
   transition: all 2s ease;
+}
+
+.wordLink {
+  text-decoration: none;
+  
 }
 </style>
