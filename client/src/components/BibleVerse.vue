@@ -2,7 +2,7 @@
   <v-container fluid class="mx-0" fill-height :style="{background: gradient}">
     <v-row class="text-center" fill-height>
       <v-col cols="12" md="4" offset-md="4">
-        <v-fade-transition>
+        <v-slide-y-transition>
         <v-card v-if="verseLoaded">
           <v-card-title>
             {{verse.bookname}} {{verse.chapter}}:{{verse.verse}}
@@ -23,9 +23,17 @@
             </p>
           </v-card-text>
         </v-card>
-        </v-fade-transition>
+
+        </v-slide-y-transition>
+                <div v-if="verseLoaded" class="mt-4">
+           <v-btn color="white" @click.stop.prevent="loadVerse" v-if="verseLoaded">Read another verse</v-btn>
+        </div>
+        <template v-if="!verseLoaded">
+            <p class="white--text">Loading verse...</p>
+        </template>
       </v-col>
     </v-row>
+    <img src="https://thebiblebuteverywordisadifferentfont.azurewebsites.net/ogimage.png" style="display: none;" />
   </v-container>
 </template>
 
@@ -45,7 +53,6 @@ import {getFonts, getVerse} from '@/utils/api'
     },
     computed: {
       gradient() {
-        debugger
         let colors = "linear-gradient(45deg";
         this.colors.forEach(function(e) {
           colors += "," + e;
@@ -56,20 +63,7 @@ import {getFonts, getVerse} from '@/utils/api'
     },
     async mounted() {
       this.generateGradientBg();
-      // Query verse
-      const verse = await getVerse();
-      this.verse = verse.data[0]
-      
-      this.verseWords = this.verse.text.split(' ');
-      const fonts = await getFonts(this.verseWords.length)
-      this.fonts = fonts.data;
-      this.fontFamilies = this.fonts.map(x=>x.family);
-      await WebFont.load({
-        google: {
-          families: this.fontFamilies
-        }
-      })
-      this.verseLoaded = true;
+      await this.loadVerse()
     },
     methods: {
       generateGradientBg(numColors = 2) {
@@ -80,6 +74,23 @@ import {getFonts, getVerse} from '@/utils/api'
       },
       handleNavigateToGoogleFont(font) {
         window.open("https://fonts.google.com/specimen/" + font, "_blank")
+      },
+      async loadVerse() {
+        this.verseLoaded = false
+              // Query verse
+        const verse = await getVerse();
+        this.verse = verse.data[0]
+        
+        this.verseWords = this.verse.text.split(' ');
+        const fonts = await getFonts(this.verseWords.length)
+        this.fonts = fonts.data;
+        this.fontFamilies = this.fonts.map(x=>x.family);
+        await WebFont.load({
+          google: {
+            families: this.fontFamilies
+          }
+        })
+        this.verseLoaded = true;
       },
       randomHex() {
         return (

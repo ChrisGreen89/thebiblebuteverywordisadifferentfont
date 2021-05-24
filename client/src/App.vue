@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <BibleVerse/>
-      <v-footer absolute>
+      <v-footer fixed>
         The Bible, but Every Word is a Different Font. &copy;2021 <a href="https://chrisgreen.dev" class="ml-1">chrisgreen.dev</a>
       </v-footer>
     </v-main>
