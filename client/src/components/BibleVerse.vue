@@ -26,7 +26,8 @@
 
         </v-slide-y-transition>
                 <div v-if="verseLoaded" class="mt-4">
-           <v-btn color="white" @click.stop.prevent="loadVerse" v-if="verseLoaded">Read another verse</v-btn>
+           <v-btn color="white" class="mx-1" @click.stop.prevent="handleReadAnotherVerse" v-if="verseLoaded">Read another verse</v-btn>
+           <v-btn color="white" class="mx-1" href="https://github.com/ChrisGreen89/thebiblebuteverywordisadifferentfont" v-if="verseLoaded"><i class="fab fa-github mr-1" />View on GitHub</v-btn>
         </div>
         <template v-if="!verseLoaded">
             <p class="white--text">Loading verse...</p>
@@ -74,6 +75,10 @@ import {getFonts, getVerse} from '@/utils/api'
       },
       handleNavigateToGoogleFont(font) {
         window.open("https://fonts.google.com/specimen/" + font, "_blank")
+      },
+      handleReadAnotherVerse() {
+        this.generateGradientBg();
+        this.loadVerse();
       },
       async loadVerse() {
         this.verseLoaded = false
