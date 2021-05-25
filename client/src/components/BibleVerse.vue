@@ -25,7 +25,7 @@
         </v-card>
 
         </v-slide-y-transition>
-                <div v-if="verseLoaded" class="mt-4">
+        <div v-if="verseLoaded && !hideUi" class="mt-4">
            <v-btn color="white" class="mx-1" @click.stop.prevent="handleReadAnotherVerse" v-if="verseLoaded">Read another verse</v-btn>
            <v-btn color="white" class="mx-1" href="https://github.com/ChrisGreen89/thebiblebuteverywordisadifferentfont" v-if="verseLoaded"><i class="fab fa-github mr-1" />View on GitHub</v-btn>
         </div>
@@ -48,6 +48,7 @@ import {getFonts, getVerse} from '@/utils/api'
         verse: null,
         verseLoaded: false,
         verseWords: [],
+        hideUi: false,
         fonts: [],
         fontFamilies: []
       }
@@ -64,7 +65,14 @@ import {getFonts, getVerse} from '@/utils/api'
     },
     async mounted() {
       this.generateGradientBg();
-      await this.loadVerse()
+
+      // Do we have a requested verse?
+      let uri = window.location.search;
+      let params = new URLSearchParams(uri);
+
+      this.hideUi = params.get("hideUi") == "true" || params.get("hideUi") == 1
+      this.$emit("hideUi", this.hideUi)
+      await this.loadVerse(params.get('verse'))
     },
     methods: {
       generateGradientBg(numColors = 2) {
@@ -80,12 +88,11 @@ import {getFonts, getVerse} from '@/utils/api'
         this.generateGradientBg();
         this.loadVerse();
       },
-      async loadVerse() {
+      async loadVerse(verseParam = null) {
         this.verseLoaded = false
-              // Query verse
-        let uri = window.location.search;
-        let params = new URLSearchParams(uri);
-        const verse = await getVerse(params.get('verse'));
+        
+        // Query verse
+        const verse = await getVerse(verseParam);
         this.verse = verse.data[0]
         
         this.verseWords = this.verse.text.split(' ');
