@@ -25,6 +25,8 @@ const tweetVerse = async (req, res) => {
                 status: "Testing a test tweet test!",
                 media_ids: mediaid.media_id_string
             })
+
+            res.status(200).send("OK")
         }
         
     }
