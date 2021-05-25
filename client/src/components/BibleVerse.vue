@@ -13,10 +13,10 @@
                <v-tooltip :key="i" top>
                   <template v-slot:activator="{on}">
 
-                  <div @click.stop.prevent="handleNavigateToGoogleFont(fontFamilies[i])" v-on="on" style="display: inline;cursor: pointer;" :style="`font-family: ${fontFamilies[i]} !important; font-size: 20px !important;`" class="subtitle-1" :key="i">
+                  <div @click.stop.prevent="handleNavigateToGoogleFont(fonts[i])" v-on="on" style="display: inline;cursor: pointer;" :style="`font-family: ${fonts[i]} !important; font-size: 20px !important;`" class="subtitle-1" :key="i">
                     {{word}}&nbsp;</div>
                   </template>
-                  <span>{{fontFamilies[i]}}</span>
+                  <span>{{fonts[i]}}</span>
                </v-tooltip>
               
             </template>
@@ -50,7 +50,7 @@ import {getFonts, getVerse} from '@/utils/api'
         verseWords: [],
         hideUi: false,
         fonts: [],
-        fontFamilies: []
+        manualFonts: false
       }
     },
     computed: {
@@ -64,14 +64,23 @@ import {getFonts, getVerse} from '@/utils/api'
       }
     },
     async mounted() {
+      // Generate a potentially gross gradient background. Is very Christian.
       this.generateGradientBg();
 
       // Do we have a requested verse?
       let uri = window.location.search;
       let params = new URLSearchParams(uri);
 
+      // If we're given a list of font families, use those
+      if (params.get("fonts")) {
+        this.fonts = params.get("fonts")?.split(",")
+      }
+
+      // Tell our parent component to update its UI
       this.hideUi = params.get("hideUi") == "true" || params.get("hideUi") == 1
       this.$emit("hideUi", this.hideUi)
+
+      // Ok, we're set up, let's load a verse
       await this.loadVerse(params.get('verse'))
     },
     methods: {
@@ -92,16 +101,14 @@ import {getFonts, getVerse} from '@/utils/api'
         this.verseLoaded = false
         
         // Query verse
-        const verse = await getVerse(verseParam);
-        this.verse = verse.data[0]
-        
-        this.verseWords = this.verse.text.split(' ');
-        const fonts = await getFonts(this.verseWords.length)
-        this.fonts = fonts.data;
-        this.fontFamilies = this.fonts.map(x=>x.family);
+        const verseQuery = await getVerse(verseParam, this.fonts);
+        this.verse = verseQuery.data?.verse
+        this.fonts = verseQuery.data?.fonts
+        console.log(this.verse)
+        this.verseWords = this.verse.text?.split(' ')
         await WebFont.load({
           google: {
-            families: this.fontFamilies
+            families: this.fonts
           }
         })
         this.verseLoaded = true;

@@ -4,16 +4,16 @@ const _ = require('underscore')
 
 const GOOGLEFONTSCACHEKEY = "fonts"
 
-const getFonts = async (req, res) => {
+const getFonts = async (limit) => {
     
     const GOOGLEFONTAPIKEY = process.env.GOOGLEFONTAPIKEY
-    const numFontsToReturn = req.query.limit
+    const numFontsToReturn = limit
 
     // Try and get the fonts from our cache frist
     var cachedFonts = cache.get(GOOGLEFONTSCACHEKEY)
     if (cachedFonts) {
         console.log("Found font list in cache. Returning");
-        res.send(numFontsToReturn ? _.sample(cachedFonts, numFontsToReturn) : cachedFonts)
+        return numFontsToReturn ? _.sample(cachedFonts, numFontsToReturn) : cachedFonts
         return;
     }
     console.log("No cached fonts found. Querying Google API");
@@ -23,17 +23,18 @@ const getFonts = async (req, res) => {
                 'api-key': GOOGLEFONTAPIKEY
             }
         })
-        cache.put(GOOGLEFONTSCACHEKEY, fontQuery.data?.items)
+        cache.put(GOOGLEFONTSCACHEKEY, fontQuery.data?.items.map(x=>x.family))
 
         let fonts = fontQuery.data.items
 
         if (numFontsToReturn) {
             fonts = _.sample(fonts, numFontsToReturn);
         }
-        res.send(fonts);
+        return fonts.map(x=>x.family)
     }
     catch (err) {
-        res.send(err)
+        console.log(err);
+        return []
     }
 }
 

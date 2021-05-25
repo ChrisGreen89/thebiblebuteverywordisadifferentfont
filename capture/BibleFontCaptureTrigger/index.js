@@ -1,9 +1,12 @@
 const puppeteer = require("puppeteer");
 
 module.exports = async function (context, req) {
+    console.log(req.query.url);
     const url = req.query.url || "https://thebiblebuteverywordisadifferentfont.azurewebsites.net";
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: true,
+                                            args: ['--no-sandbox']});
     const page = await browser.newPage();
+    await page.setViewport({width: 800, height: 800, deviceScaleFactor: 2});
     await page.goto(url);
     await waitTillHTMLRendered(page)
     const buffer = await page.screenshot();
