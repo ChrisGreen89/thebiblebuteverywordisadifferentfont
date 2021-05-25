@@ -1,17 +1,18 @@
-var screenshot = require("node-server-screenshot");
+const screenshotUtil = require('../../utils/screenshot')
 
 const getCapture = async (req, res) => {
+    try {
+        const screenshot = await screenshotUtil.takeScreenshot();
+        console.log("Got screenshot")
+        res.setHeader('content-type', 'image/png');
+        res.end(screenshot)
+    }
 
-    screenshot.fromURL('https://thebiblebuteverywordisadifferentfont.azurewebsites.net', null, {
-        waitMilliseconds: 3000,
-    }, function(err, buffer) {
-        res.writeHead(200, {
-            'Content-Type': 'image/png',
-            'Content-Length': buffer.length
-          });
-        
-          res.end(buffer)
-    })
+    catch (err) {
+        console.log(err)
+        res.send(err.data)
+    }
+
 
     
 }
