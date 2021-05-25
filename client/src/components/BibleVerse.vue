@@ -83,7 +83,9 @@ import {getFonts, getVerse} from '@/utils/api'
       async loadVerse() {
         this.verseLoaded = false
               // Query verse
-        const verse = await getVerse();
+        let uri = window.location.search;
+        let params = new URLSearchParams(uri);
+        const verse = await getVerse(params.get('verse'));
         this.verse = verse.data[0]
         
         this.verseWords = this.verse.text.split(' ');

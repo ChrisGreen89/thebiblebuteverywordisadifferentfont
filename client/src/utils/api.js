@@ -1,9 +1,8 @@
 import axios from 'axios';
 axios.defaults.baseURL = process.env.VUE_APP_API_URL || process.env.API_URL || "https://thebiblebuteverywordisadifferentfont-api.azurewebsites.net"
 
-export const getVerse = async() => {
-    const verse = await axios.get('/verse')
-    return verse;
+export const getVerse = async(verse) => {
+    return await axios.get(`/verse?verse=${verse}`)
 }
 
 export const getFonts = async(limit = null) => {

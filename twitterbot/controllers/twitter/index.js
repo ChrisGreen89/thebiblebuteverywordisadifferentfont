@@ -26,7 +26,7 @@ const tweetVerse = async (req, res) => {
                 media_ids: mediaid.media_id_string
             })
 
-            res.status(200).send("OK")
+            res.status(200).send()
         }
         
     }
