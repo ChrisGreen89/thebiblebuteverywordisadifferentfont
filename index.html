@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bible, But Every Word Is a Different Font</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0a0f;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 1000;
+        }
+
+
+        /* Animated gradient blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+
+        .blob-3 {
+            animation-name: blobFloatCenter;
+        }
+
+        @keyframes blobFloatCenter {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(-45%, -55%) scale(1.05); }
+            50% { transform: translate(-55%, -45%) scale(0.95); }
+            75% { transform: translate(-48%, -52%) scale(1.02); }
+        }
+
+        /* Glow line at top */
+        .glow-line {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), rgba(236, 72, 153, 0.6), transparent);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 60px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.4rem 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge::before {
+            content: '✦';
+            color: #a78bfa;
+        }
+
+        .header h1 {
+            font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .header .tagline {
+            display: block;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: -0.01em;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 0rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sleek landing section */
+        .landing {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .landing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .landing h1 {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a8a8a8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing .subtitle {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .cta-button:hover::after {
+            left: 100%;
+        }
+
+        /* The chaos zone */
+        .verse-container {
+            display: none;
+            height: 100vh;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .verse-container.active {
+            display: flex;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem 3rem;
+            max-width: 800px;
+            max-height: 50vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3),
+                        0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .verse-reference {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 2rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .verse-text {
+            line-height: 2;
+            font-size: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .verse-text .word {
+            display: inline;
+        }
+
+        .another-button {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 1rem;
+            padding: 0.8rem 2rem;
+            margin-top: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .another-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .loading {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 1.5rem;
+            color: #999;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+            display: inline-block;
+            width: 1.5em;
+            text-align: left;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        /* Floating decorative elements */
+        .floater {
+            position: fixed;
+            font-size: 3rem;
+            opacity: 0.03;
+            pointer-events: none;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .disclaimer {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern SaaS background elements -->
+    <div class="glow-line"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Floating crosses for that holy aesthetic -->
+    <div class="floater" style="top: 10%; left: 5%;">✝</div>
+    <div class="floater" style="top: 30%; right: 10%; animation-delay: -5s;">✝</div>
+    <div class="floater" style="bottom: 20%; left: 15%; animation-delay: -10s;">✝</div>
+    <div class="floater" style="top: 60%; right: 5%; animation-delay: -15s;">✝</div>
+
+    <!-- Sleek landing -->
+    <!-- The chaos -->
+    <section class="verse-container active" id="verseContainer">
+        <header class="header">
+            <div class="badge">Introducing Divine Typography</div>
+            <h1>The Bible...</h1>
+            <p class="tagline">but every word is a different font</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">100+</div>
+                    <div class="stat-label">Google Fonts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">31,102</div>
+                    <div class="stat-label">Verses</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">Chaos</div>
+                </div>
+            </div>
+        </header>
+        <div class="card">
+            <div class="verse-reference" id="verseReference"></div>
+            <div class="verse-text" id="verseText">
+                <span class="loading">Loading divine typography</span>
+            </div>
+        </div>
+        <button class="another-button" onclick="getNewVerse()">Bestow Another Verse Upon Me</button>
+    </section>
+
+    <div class="disclaimer">A typographic crime against humanity</div>
+
+    <script>
+        // A curated selection of Google Fonts that range from elegant to unhinged
+        const fonts = [
+            'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Oswald', 'Raleway', 'Merriweather',
+            'Playfair Display', 'Poppins', 'Ubuntu', 'Nunito', 'Rubik', 'Work Sans', 'Fira Sans',
+            'Quicksand', 'Karla', 'Inconsolata', 'Crimson Text', 'Libre Baskerville', 'Josefin Sans',
+            'Abril Fatface', 'Pacifico', 'Shadows Into Light', 'Permanent Marker', 'Caveat',
+            'Lobster', 'Dancing Script', 'Satisfy', 'Great Vibes', 'Sacramento',
+            'Bangers', 'Righteous', 'Passion One', 'Russo One', 'Black Ops One',
+            'Creepster', 'Nosifer', 'Butcherman', 'Eater', 'Metal Mania',
+            'Press Start 2P', 'VT323', 'Special Elite', 'Courier Prime',
+            'Cinzel', 'Cinzel Decorative', 'Uncial Antiqua', 'MedievalSharp', 'Almendra',
+            'Berkshire Swash', 'Bungee', 'Bungee Shade', 'Monoton', 'Fascinate Inline',
+            'Fredoka One', 'Luckiest Guy', 'Chewy', 'Shrikhand', 'Titan One',
+            'Comfortaa', 'Varela Round', 'Baloo 2', 'Fredoka', 'Grandstander',
+            'Cormorant Garamond', 'Spectral', 'Cardo', 'EB Garamond', 'Lora',
+            'Archivo Black', 'Anton', 'Bebas Neue', 'Staatliches', 'Teko',
+            'Orbitron', 'Audiowide', 'Electrolize', 'Rajdhani', 'Exo 2',
+            'Amatic SC', 'Indie Flower', 'Kalam', 'Patrick Hand', 'Handlee',
+            'Zilla Slab', 'Bitter', 'Domine', 'Vollkorn', 'Rokkitt',
+            'Saira Condensed', 'Barlow Condensed', 'Fjalla One', 'Yanone Kaffeesatz',
+            'Comic Neue', 'Gloria Hallelujah', 'Rock Salt', 'Reenie Beanie',
+            'Alfa Slab One', 'Changa One', 'Coda', 'Fugaz One', 'Squada One',
+            'Philosopher', 'Marcellus', 'Italiana', 'Oleo Script', 'Courgette'
+        ];
+
+        const bookNames = {
+            1: 'Genesis', 2: 'Exodus', 3: 'Leviticus', 4: 'Numbers', 5: 'Deuteronomy',
+            6: 'Joshua', 7: 'Judges', 8: 'Ruth', 9: '1 Samuel', 10: '2 Samuel',
+            11: '1 Kings', 12: '2 Kings', 13: '1 Chronicles', 14: '2 Chronicles',
+            15: 'Ezra', 16: 'Nehemiah', 17: 'Esther', 18: 'Job', 19: 'Psalms',
+            20: 'Proverbs', 21: 'Ecclesiastes', 22: 'Song of Solomon', 23: 'Isaiah',
+            24: 'Jeremiah', 25: 'Lamentations', 26: 'Ezekiel', 27: 'Daniel',
+            28: 'Hosea', 29: 'Joel', 30: 'Amos', 31: 'Obadiah', 32: 'Jonah',
+            33: 'Micah', 34: 'Nahum', 35: 'Habakkuk', 36: 'Zephaniah', 37: 'Haggai',
+            38: 'Zechariah', 39: 'Malachi', 40: 'Matthew', 41: 'Mark', 42: 'Luke',
+            43: 'John', 44: 'Acts', 45: 'Romans', 46: '1 Corinthians', 47: '2 Corinthians',
+            48: 'Galatians', 49: 'Ephesians', 50: 'Philippians', 51: 'Colossians',
+            52: '1 Thessalonians', 53: '2 Thessalonians', 54: '1 Timothy', 55: '2 Timothy',
+            56: 'Titus', 57: 'Philemon', 58: 'Hebrews', 59: 'James', 60: '1 Peter',
+            61: '2 Peter', 62: '1 John', 63: '2 John', 64: '3 John', 65: 'Jude',
+            66: 'Revelation'
+        };
+
+        let loadedFonts = new Set();
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function loadFont(fontName) {
+            if (loadedFonts.has(fontName)) return Promise.resolve();
+
+            return new Promise((resolve) => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}:wght@400;700&display=swap`;
+                link.onload = () => {
+                    loadedFonts.add(fontName);
+                    resolve();
+                };
+                link.onerror = () => resolve(); // Continue even if font fails
+                document.head.appendChild(link);
+            });
+        }
+
+        async function displayVerse(text, book, chapter, verse) {
+            const verseTextEl = document.getElementById('verseText');
+            const verseRefEl = document.getElementById('verseReference');
+
+            // Clean up the text - remove HTML tags and Strong's numbers (e.g., "word1234")
+            const cleanText = text
+                .replace(/<[^>]*>/g, '')
+                .replace(/\d+/g, '');
+            const words = cleanText.split(/\s+/).filter(w => w.length > 0);
+
+            // Get shuffled fonts for this verse
+            const shuffledFonts = shuffleArray(fonts);
+
+            // Load all needed fonts first
+            const fontsNeeded = words.map((_, i) => shuffledFonts[i % shuffledFonts.length]);
+            await Promise.all([...new Set(fontsNeeded)].map(loadFont));
+
+            // Set the reference
+            const bookName = bookNames[book] || `Book ${book}`;
+            verseRefEl.textContent = `${bookName} ${chapter}:${verse}`;
+
+            // Scale font size based on word count
+            const baseSize = words.length > 50 ? 1 : words.length > 30 ? 1.2 : words.length > 20 ? 1.4 : 1.6;
+            verseTextEl.style.fontSize = `${baseSize}rem`;
+
+            // Build the chaos
+            verseTextEl.innerHTML = words.map((word, i) => {
+                const font = shuffledFonts[i % shuffledFonts.length];
+                return `<span class="word" style="font-family: '${font}', cursive;">${word}</span>`;
+            }).join(' ');
+        }
+
+        async function getNewVerse() {
+            const verseTextEl = document.getElementById('verseText');
+            verseTextEl.innerHTML = '<span class="loading">Loading divine typography</span>';
+
+            try {
+                const response = await fetch('https://bolls.life/get-random-verse/KJV/');
+                const data = await response.json();
+                await displayVerse(data.text, data.book, data.chapter, data.verse);
+            } catch (error) {
+                console.error('Failed to fetch verse:', error);
+                // Fallback verse
+                await displayVerse(
+                    'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
+                    43, 3, 16
+                );
+            }
+        }
+
+        // Auto-load on page ready
+        getNewVerse();
+    </script>
+</body>
+</html>
