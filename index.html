@@ -450,27 +450,72 @@
     <script>
         // A curated selection of Google Fonts that range from elegant to unhinged
         const fonts = [
+            // Clean & Professional
             'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Oswald', 'Raleway', 'Merriweather',
             'Playfair Display', 'Poppins', 'Ubuntu', 'Nunito', 'Rubik', 'Work Sans', 'Fira Sans',
             'Quicksand', 'Karla', 'Inconsolata', 'Crimson Text', 'Libre Baskerville', 'Josefin Sans',
+            'Inter', 'DM Sans', 'Manrope', 'Space Grotesk', 'Outfit', 'Sora', 'Lexend',
+
+            // Cursive & Script
             'Abril Fatface', 'Pacifico', 'Shadows Into Light', 'Permanent Marker', 'Caveat',
             'Lobster', 'Dancing Script', 'Satisfy', 'Great Vibes', 'Sacramento',
+            'Allura', 'Alex Brush', 'Tangerine', 'Pinyon Script', 'Rochester',
+            'Yellowtail', 'Niconne', 'Kaushan Script', 'Cookie', 'Damion',
+
+            // Display & Fun
             'Bangers', 'Righteous', 'Passion One', 'Russo One', 'Black Ops One',
-            'Creepster', 'Nosifer', 'Butcherman', 'Eater', 'Metal Mania',
-            'Press Start 2P', 'VT323', 'Special Elite', 'Courier Prime',
-            'Cinzel', 'Cinzel Decorative', 'Uncial Antiqua', 'MedievalSharp', 'Almendra',
-            'Berkshire Swash', 'Bungee', 'Bungee Shade', 'Monoton', 'Fascinate Inline',
             'Fredoka One', 'Luckiest Guy', 'Chewy', 'Shrikhand', 'Titan One',
+            'Bungee', 'Bungee Shade', 'Monoton', 'Fascinate Inline', 'Modak',
+            'Bowlby One SC', 'Chonburi', 'Freckle Face', 'Londrina Solid', 'Rampart One',
+
+            // Horror & Spooky
+            'Creepster', 'Nosifer', 'Butcherman', 'Eater', 'Metal Mania',
+            'Griffy', 'Jolly Lodger', 'Fruktur', 'Rye', 'Pirata One',
+
+            // Retro & Typewriter
+            'Press Start 2P', 'VT323', 'Special Elite', 'Courier Prime',
+            'Silkscreen', 'DotGothic16', 'Share Tech Mono', 'Cutive Mono', 'Anonymous Pro',
+
+            // Medieval & Fancy
+            'Cinzel', 'Cinzel Decorative', 'Uncial Antiqua', 'MedievalSharp', 'Almendra',
+            'Berkshire Swash', 'Metamorphous', 'Eagle Lake', 'Fondamento', 'IM Fell English',
+
+            // Rounded & Friendly
             'Comfortaa', 'Varela Round', 'Baloo 2', 'Fredoka', 'Grandstander',
+            'Nunito Sans', 'Cabin', 'Dosis', 'Questrial', 'Signika',
+
+            // Elegant Serif
             'Cormorant Garamond', 'Spectral', 'Cardo', 'EB Garamond', 'Lora',
+            'Libre Caslon Text', 'Bodoni Moda', 'Cormorant', 'Gilda Display', 'Sorts Mill Goudy',
+
+            // Bold & Impactful
             'Archivo Black', 'Anton', 'Bebas Neue', 'Staatliches', 'Teko',
-            'Orbitron', 'Audiowide', 'Electrolize', 'Rajdhani', 'Exo 2',
-            'Amatic SC', 'Indie Flower', 'Kalam', 'Patrick Hand', 'Handlee',
-            'Zilla Slab', 'Bitter', 'Domine', 'Vollkorn', 'Rokkitt',
-            'Saira Condensed', 'Barlow Condensed', 'Fjalla One', 'Yanone Kaffeesatz',
-            'Comic Neue', 'Gloria Hallelujah', 'Rock Salt', 'Reenie Beanie',
             'Alfa Slab One', 'Changa One', 'Coda', 'Fugaz One', 'Squada One',
-            'Philosopher', 'Marcellus', 'Italiana', 'Oleo Script', 'Courgette'
+            'Big Shoulders Display', 'Saira Stencil One', 'Racing Sans One', 'Faster One', 'Baumans',
+
+            // Futuristic & Tech
+            'Orbitron', 'Audiowide', 'Electrolize', 'Rajdhani', 'Exo 2',
+            'Michroma', 'Nova Square', 'Oxanium', 'Quantico', 'Syncopate',
+            'Chakra Petch', 'Tourney', 'Bruno Ace', 'Geo', 'Iceland',
+
+            // Handwritten
+            'Amatic SC', 'Indie Flower', 'Kalam', 'Patrick Hand', 'Handlee',
+            'Comic Neue', 'Gloria Hallelujah', 'Rock Salt', 'Reenie Beanie',
+            'Architects Daughter', 'Just Another Hand', 'Nothing You Could Do', 'Gochi Hand', 'Covered By Your Grace',
+            'Schoolbell', 'Short Stack', 'Sue Ellen Francisco', 'Walter Turncoat', 'Crafty Girls',
+
+            // Slab Serif
+            'Zilla Slab', 'Bitter', 'Domine', 'Vollkorn', 'Rokkitt',
+            'Arvo', 'Crete Round', 'Kameron', 'Sanchez', 'Slabo 27px',
+
+            // Condensed
+            'Saira Condensed', 'Barlow Condensed', 'Fjalla One', 'Yanone Kaffeesatz',
+            'Oswald', 'Pathway Gothic One', 'Abel', 'News Cycle', 'Economica',
+
+            // Quirky & Unique
+            'Philosopher', 'Marcellus', 'Italiana', 'Oleo Script', 'Courgette',
+            'Poiret One', 'Julius Sans One', 'Yeseva One', 'Alike Angular', 'Forum',
+            'Corben', 'Rammetto One', 'Sniglet', 'Bubblegum Sans', 'Cherry Cream Soda'
         ];
 
         const bookNames = {
